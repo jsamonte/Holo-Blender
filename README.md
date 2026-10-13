@@ -303,8 +303,9 @@ FreeCAD side of this project learned the hard way.
 acceptance arithmetic, the 5 inch ruler case, a scene authored in
 centimetres, the Z up to Y up turn, per object offsets, modifiers applied
 and not, colour from a Principled BSDF, the WebSocket handshake against the
-RFC's own test vector, and the whole chain from a Blender object to a
-downloaded GLB.
+RFC's own test vector, the whole chain from a Blender object to a downloaded
+GLB, live mode, and every button driven through the extension as Blender
+actually loads it.
 
 **Not yet on the glasses.** The extension is new. The lens it talks to is
 the one proven on hardware with Holo-CAD, and the wire protocol is identical
@@ -334,7 +335,7 @@ tools/                              tests
 .\tools\run_tests.ps1
 ```
 
-104 checks in three suites, all on Blender's own Python with nothing
+129 checks in four suites, all on Blender's own Python with nothing
 installed, which is the interpreter the extension actually runs on.
 
 - `test_server.py` the embedded server: the RFC 6455 handshake against the
@@ -347,8 +348,13 @@ installed, which is the interpreter the extension actually runs on.
   modifiers, colour, and which objects get picked.
 - `test_end_to_end.py` the whole chain: a Blender object through
   `service.send()` to a WebSocket client and a downloaded GLB, including per
-  object sends, an object that moves, one that is deleted, and a lens that
-  connects late.
+  object sends, an object that moves, one that is deleted, a lens that
+  connects late, and live mode hooking and unhooking the depsgraph.
+- `test_operators.py` the buttons, through the real install path: the
+  extension enabled the way Blender enables it. That is the only way to
+  catch a preferences lookup that finds nothing, which as an extension is
+  easy to get wrong and silent when you do. It skips itself, passing, when
+  the extension is not linked in.
 
 Both Blender suites run with `--factory-startup`, so they are unaffected by
 whatever addons and preferences happen to be set up on the machine.

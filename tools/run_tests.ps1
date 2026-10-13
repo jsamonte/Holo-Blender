@@ -13,6 +13,11 @@
                             Blender, since it builds real objects.
       test_end_to_end.py    a Blender object through service.send() to a
                             WebSocket client and a downloaded GLB.
+      test_operators.py     the buttons, through the real install path: the
+                            extension enabled the way Blender enables it,
+                            which is the only way to catch a preferences
+                            lookup that silently finds nothing. Skips
+                            itself, passing, when it is not linked in.
 
     Both Blender suites run with --factory-startup, so they are unaffected
     by whatever addons and preferences happen to be set up here.
@@ -66,7 +71,8 @@ Write-Host ""
 $suites = @(
     @{ Name = "server";      Exe = $python[0]; Args = @("tools\test_server.py") },
     @{ Name = "exporter";    Exe = $exe; Args = @("--background", "--factory-startup", "--python", "tools\test_exporter.py") },
-    @{ Name = "end to end";  Exe = $exe; Args = @("--background", "--factory-startup", "--python", "tools\test_end_to_end.py") }
+    @{ Name = "end to end";  Exe = $exe; Args = @("--background", "--factory-startup", "--python", "tools\test_end_to_end.py") },
+    @{ Name = "operators";   Exe = $exe; Args = @("--background", "--factory-startup", "--python", "tools\test_operators.py") }
 )
 
 $failed = @()

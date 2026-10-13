@@ -217,6 +217,43 @@ def main():
     late.close()
 
     print("")
+    print("live mode watches the scene")
+    # The timer that does the sending cannot fire here: background Blender
+    # runs no event loop, so bpy.app.timers never come due. Everything
+    # either side of it is real, and _flush is called directly to stand in
+    # for the tick.
+    service.forget_sent()
+    handlers = bpy.app.handlers.depsgraph_update_post
+    before = len(handlers)
+    check("live mode turns on", service.set_live(True) is True)
+    check("and hooks the depsgraph", len(handlers) == before + 1,
+          "{0} -> {1}".format(before, len(handlers)))
+
+    service._pending = False
+    watched = add_cube("Watched", 0.08, location=(0, 0.5, 0))
+    bpy.context.view_layer.update()
+    check("a change to the scene queues a send", service._pending is True)
+
+    service._flush()
+    check("and the tick clears the queue", service._pending is False)
+    # Drain whatever the flush pushed, since live mode decides for itself
+    # how many objects changed.
+    names = set()
+    try:
+        while True:
+            lens.sock.settimeout(1.0)
+            names.add(lens.message()["id"])
+    except (OSError, AssertionError):
+        pass
+    lens.sock.settimeout(10)
+    check("the lens heard about the new object", "Watched" in names, str(names))
+
+    check("live mode turns off", service.set_live(False) is False)
+    check("and unhooks the depsgraph", len(handlers) == before,
+          "{0} -> {1}".format(before, len(handlers)))
+    bpy.data.objects.remove(watched, do_unlink=True)
+
+    print("")
     print("failure is reported, not raised at the user")
     bpy.ops.wm.read_factory_settings(use_empty=True)
     try:
