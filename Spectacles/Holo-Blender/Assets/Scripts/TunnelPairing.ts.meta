@@ -1,0 +1,59 @@
+- !<AssetImportMetadata/064fd5f3-49da-4cb7-9313-49760638bfaa>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 59697595-056a-4dde-95b8-fca87d9ec48e
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 59697595-056a-4dde-95b8-fca87d9ec48e
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 0afc8831-9c94-4bc6-9506-a44afe1207ee
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/0afc8831-9c94-4bc6-9506-a44afe1207ee>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: ac1f07ed-8a91-45f6-bddf-cde723a23aa0
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    askAtStart: false
+    bridgeClientObject: false
+    promptText: false
+    remember: false
+    takeOver: false
+    words: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - bridgeClientObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      promptText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      askAtStart: true
+      remember: true
+      takeOver: true
+      words: ""
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input SceneObject bridgeClientObject {"hint":"Object holding the BridgeClient. Leave empty to look on this object."}'
+    - '// @input Component.Text promptText {"hint":"Text that prompts for the words and shows what was typed."}'
+    - '// @input bool askAtStart = true {"hint":"Ask for the words as soon as the lens opens, when none are stored."}'
+    - '// @input bool remember = true {"hint":"Remember the words between sessions."}'
+    - "// @input bool takeOver = true {\"hint\":\"Supply the address instead of BridgeClient's. Turn off for a local network build.\"}"
+    - '// @input string words {"hint":"Words typed here are used instead of asking. The keyboard never appears in the Spectacles preview, so this is how to test there."}'

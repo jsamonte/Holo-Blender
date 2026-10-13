@@ -1,0 +1,32 @@
+schema_version = "1.0.0"
+
+id = "holo_blender"
+version = "0.1.0"
+name = "Holo-Blender"
+tagline = "See your Blender scene on Snapchat Spectacles at true size"
+maintainer = "Jared Samonte <jared.v.samonte@gmail.com>"
+type = "add-on"
+
+website = "https://github.com/jsamonte/Holo-Blender"
+
+tags = ["3D View", "Import-Export"]
+
+blender_version_min = "4.2.0"
+
+license = [
+  "SPDX:GPL-3.0-or-later",
+]
+
+[permissions]
+# The extension is the server: it listens on the local network so the
+# glasses can fetch models, and optionally runs cloudflared so they can
+# reach it from anywhere. Nothing is uploaded to anyone else's machine.
+network = "Serve models to the Spectacles, and tunnel to them"
+files = "Remember a running tunnel between sessions"
+
+[build]
+paths_exclude_pattern = [
+  "__pycache__/",
+  "/.git/",
+  "/*.zip",
+]
